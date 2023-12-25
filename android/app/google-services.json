@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "837976554859",
+    "project_id": "chatapk-8bfda",
+    "storage_bucket": "chatapk-8bfda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837976554859:android:e26ef25bc2b11640de602e",
+        "android_client_info": {
+          "package_name": "com.example.projecknew"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNbTr99bhd4sJGg06KcVQEKeUygpl65KU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
