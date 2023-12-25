@@ -13,7 +13,7 @@ Connect, share, and explore with ease—Chat APK for Flutter, where conversation
 
 1. Clone this repo
 ```sh
-git clone https://github.com/dev-rahul-0/TicTacToe
+git clone https://github.com/dev-rahul-0/Justchat
 ```
 2. run this command to fetch the dependencies
 ```sh
