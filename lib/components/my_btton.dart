@@ -13,7 +13,7 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: Container(height: 55,
         decoration: const BoxDecoration(
           color: Colors.black,
         ),

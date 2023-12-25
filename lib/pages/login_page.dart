@@ -43,7 +43,7 @@ class _LayoutState extends State<Layout> {
               children: [
                 const SizedBox(height: 50,),
                 Icon(
-                  Icons.message,
+                  Icons.account_circle_outlined,
                   size: 80,
                   color: Colors.grey[800],
                 ),
