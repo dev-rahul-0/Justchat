@@ -2,7 +2,6 @@
 
 Connect, share, and explore with ease—Chat APK for Flutter, where conversations come alive in a tap.
 
-## Screenhot
 ## Screenshots
 
 |     Registered UI      |Login UI                   |  Home Screen                | Chat Screen |
