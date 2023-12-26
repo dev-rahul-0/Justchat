@@ -1,6 +1,6 @@
 # Justchat
 
-Connect, share, and explore with ease—Chat APK for Flutter, where conversations come alive in a tap.
+Connect, share, and explore with ease Chat APK for Flutter, where conversations come alive in a tap.
 
 ## Screenshots
 
