@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:projecknew/pages/service/auth/auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../components/my_btton.dart';
 import '../components/my_text_field.dart';
+
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
-  const RegisterPage({super.key,required this.onTap});
+  const RegisterPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final emailcontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
-  final _conformPassword = TextEditingController();
-  void Signup() async {
-  if (passwordcontroller.text != _conformPassword.text) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Password do not match'),
-    ));
-    return;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  void signup() async {
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Passwords do not match'),
+      ));
+      return;
+    }
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      final userCredential = await authService.signUpWithEmailandPassword(
+          emailController.text, passwordController.text);
+      await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+        'email': emailController.text,
+        'uid': userCredential.user!.uid,
+      });
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
   }
-  final authService = Provider.of<AuthService>(context, listen: false);
-  try {
-    await authService.signUpWithEmailandPassword(emailcontroller.text, passwordcontroller.text);
-  }catch (e){
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-  }
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,50 +55,56 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50,),
+                  const SizedBox(height: 50),
                   Icon(
                     Icons.account_circle_outlined,
                     size: 80,
                     color: Colors.grey[800],
                   ),
-                  const SizedBox(height: 50,),
+                  const SizedBox(height: 50),
                   const Text(
-                    "Lets's create an account for you",
+                    "Let's create an account for you",
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 25,),
+                  const SizedBox(height: 25),
                   MyTextField(
-                      controller: emailcontroller,
-                      hintText: 'E-mail',
-                      obscureText: false),
-                  const SizedBox(height: 10,),
+                    controller: emailController,
+                    hintText: 'E-mail',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 10),
                   MyTextField(
-                      controller: passwordcontroller,
-                      hintText: 'Password',
-                      obscureText: true),
-                  const SizedBox(height: 10,),
+                    controller: passwordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 10),
                   MyTextField(
-                      controller: _conformPassword,
-                      hintText: 'Conform Password',
-                      obscureText: true),
-                  const SizedBox(height: 25,),
+                    controller: confirmPasswordController,
+                    hintText: 'Confirm Password',
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 25),
                   MyButton(
-                      onTap: Signup,
-                      text: 'Sign Up'),
-                  const SizedBox(height: 50,),
-                    Row(
+                    onTap: signup,
+                    text: 'Sign Up',
+                  ),
+                  const SizedBox(height: 50),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Already  a member?'),
-                      const SizedBox(width: 4,),
+                      const Text('Already a member?'),
+                      const SizedBox(width: 4),
                       GestureDetector(
                         onTap: widget.onTap,
-                        child: const Text('Login now',style:
-                        TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),),
+                        child: const Text(
+                          'Login now',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   )
@@ -98,5 +117,3 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-
-
