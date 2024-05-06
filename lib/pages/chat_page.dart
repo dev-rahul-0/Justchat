@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +8,14 @@ import 'package:projecknew/components/my_text_field.dart';
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receverUserId;
-  final String nameId;
+  final String User;
 
   const ChatPage(
-      {super.key,
-        required this.nameId,
-      required this.receiverUserEmail,
-      required this.receverUserId});
+      {Key? key,
+        required this.User,
+        required this.receiverUserEmail,
+        required this.receverUserId})
+      : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -26,19 +26,13 @@ class _ChatPageState extends State<ChatPage> {
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  void sendMessage() async {
-    if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(
-          widget.receverUserId, _messageController.text);
-      _messageController.clear();
-    }
-  }
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.nameId),
+        title: Text(widget.User),
       ),
       body: Column(
         children: [
@@ -46,7 +40,6 @@ class _ChatPageState extends State<ChatPage> {
             child: _buildMessageList(),
           ),
           _buildMessageInput(),
-
           const SizedBox(height: 25,)
         ],
       ),
@@ -55,21 +48,28 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageList() {
     return StreamBuilder(
-        stream: _chatService.getMessage(
-            widget.receverUserId, _firebaseAuth.currentUser!.uid),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error${snapshot.error}');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading....');
-          }
-          return ListView(
-            children: snapshot.data!.docs
-                .map((document) => _buildMessageItem(document))
-                .toList(),
-          );
+      stream: _chatService.getMessage(
+          widget.receverUserId, _firebaseAuth.currentUser!.uid),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error${snapshot.error}');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('Loading....');
+        }
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          _scrollToBottom();
         });
+        return ListView.builder(
+          controller: _scrollController,
+          itemCount: snapshot.data!.docs.length,
+          itemBuilder: (context, index) {
+            var document = snapshot.data!.docs[index];
+            return _buildMessageItem(document);
+          },
+        );
+      },
+    );
   }
 
   Widget _buildMessageItem(DocumentSnapshot document) {
@@ -85,13 +85,13 @@ class _ChatPageState extends State<ChatPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment:
-              (data['senderId'] == _firebaseAuth.currentUser!.uid)
-                  ? CrossAxisAlignment.end
-                  : CrossAxisAlignment.start,
+          (data['senderId'] == _firebaseAuth.currentUser!.uid)
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           mainAxisAlignment:
-              (data['senderId'] == _firebaseAuth.currentUser!.uid)
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
+          (data['senderId'] == _firebaseAuth.currentUser!.uid)
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
           children: [
             Text(data['senderEmail']),
             const SizedBox(height: 5,),
@@ -124,5 +124,22 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
     );
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void sendMessage() async {
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          widget.receverUserId, _messageController.text);
+      _messageController.clear();
+      _scrollToBottom();
+    }
   }
 }
