@@ -9,9 +9,11 @@ import 'package:projecknew/components/my_text_field.dart';
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receverUserId;
+  final String nameId;
 
   const ChatPage(
       {super.key,
+        required this.nameId,
       required this.receiverUserEmail,
       required this.receverUserId});
 
@@ -36,7 +38,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
+        title: Text(widget.nameId),
       ),
       body: Column(
         children: [
