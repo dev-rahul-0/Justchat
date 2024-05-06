@@ -18,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final usernameController = TextEditingController(); // Step 1
 
   void signup() async {
     if (passwordController.text != confirmPasswordController.text) {
@@ -34,6 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
       await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
         'email': emailController.text,
         'uid': userCredential.user!.uid,
+        'username': usernameController.text,
       });
 
     } catch (e) {
@@ -69,6 +71,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 25),
+                  MyTextField( // Step 2
+                    controller: usernameController,
+                    hintText: 'Username',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 10),
                   MyTextField(
                     controller: emailController,
                     hintText: 'E-mail',

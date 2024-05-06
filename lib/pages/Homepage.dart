@@ -61,9 +61,10 @@ class _HomePageState extends State<HomePage> {
             final userData = users[index].data() as Map<String, dynamic>;
             final userEmail = userData['email'] as String;
             final userId = userData['uid'] as String;
+            final userName = userData['username'] as String;
             if (_auth.currentUser!.email != userEmail) {
               return ListTile(
-                title: Text(userEmail),
+                title: Text(userName),
                 onTap: () {
                   Navigator.push(
                     context,
