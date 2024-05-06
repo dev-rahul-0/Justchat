@@ -5,19 +5,20 @@ import 'package:projecknew/pages/service/auth/auth_service.dart';
 import 'package:projecknew/pages/service/auth_gate.dart';
 import 'package:provider/provider.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-      ChangeNotifierProvider(
-        create: (context) => AuthService(),
+    ChangeNotifierProvider(
+      create: (context) => AuthService(),
       child: const MyApp(),
-      ),
+    ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key); // Corrected the constructor
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -26,4 +27,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 

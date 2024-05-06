@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:projecknew/newsApp/screens/splashScreen.dart';
 import 'package:projecknew/pages/chat_page.dart';
 import 'package:projecknew/pages/service/auth/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.signOut();
@@ -25,9 +25,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
-        actions: [IconButton(onPressed: signOut, icon: Icon(Icons.logout))],
+        actions: [IconButton(onPressed: signOut, icon: const Icon(Icons.logout))],
       ),
       body: _buildUserList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> const SplashScreen()));
+        },
+        backgroundColor: Colors.grey,
+        child: const Icon(Icons.newspaper),
+      ),
     );
   }
 
@@ -68,5 +75,4 @@ class _HomePageState extends State<HomePage> {
       return Container();
     }
   }
-
 }

@@ -1,14 +1,10 @@
-import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:projecknew/chat/chat_bubble.dart';
 import 'package:projecknew/chat/chat_service.dart';
 import 'package:projecknew/components/my_text_field.dart';
-import 'package:projecknew/extra/filespage.dart';
 
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
@@ -49,7 +45,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           _buildMessageInput(),
 
-          SizedBox(height: 25,)
+          const SizedBox(height: 25,)
         ],
       ),
     );
@@ -96,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
                   : MainAxisAlignment.start,
           children: [
             Text(data['senderEmail']),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             ChatBubble(message: data['message']),
           ],
         ),
@@ -118,57 +114,13 @@ class _ChatPageState extends State<ChatPage> {
           ),
           IconButton(
             onPressed: sendMessage,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_upward,
               size: 40,
             ),
           ),
-          IconButton(onPressed: () async{
-            final result = await FilePicker.platform.pickFiles(allowMultiple: true,
-            type: FileType.custom,
-              allowedExtensions: ['pdf','mp4'],
-            );
-            if (result == null) return;
-
-            openFile(result.files.first);
-
-            final file = result.files.first;
-
-            print('Name: ${file.name}');
-            print('Bytes: ${file.bytes}');
-            print('Size: ${file.size}');
-            print('Extension: ${file.extension}');
-            print('Path: ${file.path}');
-
-            final newFile =  await SaveFilePermanently(file);
-
-            print('From Path: ${file.path!}');
-            print('To Path: ${newFile.path!}');
-
-            openFile(file);
-
-          }, icon: Icon(Icons.add_box_outlined))
         ],
       ),
     );
-  }
-
-  Future<File>SaveFilePermanently(PlatformFile file) async{
-    final appStroge = await getApplicationDocumentsDirectory();
-    final newFile = File('${appStroge.path}/${file.name}');
-
-
-    return File(file.path!).copy(newFile.path);
-  }
-
-  void openFiles(List<PlatformFile> files) =>
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Filespage(
-        files: files,
-        onOpenedFile: openFile,
-      )));
-
-
-  void openFile(PlatformFile file){
-    OpenFile.open(file.path!);
   }
 }
