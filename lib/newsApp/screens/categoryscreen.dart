@@ -4,8 +4,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../models/NewsHeadlinesModel.dart';
 import '../models/catgory_news_model.dart';
 import '../view_models/new_view_models.dart';
+import 'homescreen.dart';
 import 'news_details_screen.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -17,6 +19,9 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
+  late Future<NewsHeadlinesModel> _newsModelFuture;
+  FilterList? selectedMenu;
+  String name = 'the-times-of-india'; // Default news source
   String category = 'General'; // Default news source
   final format = DateFormat('MMMM dd, yyyy');
 
@@ -30,13 +35,69 @@ class _CategoryScreenState extends State<CategoryScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _newsModelFuture = newsViewModel
+        .fetchNewsChannelHeadLinesApi(name); // Fetch news with default source
+  }
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
+        title: Row(
+          children: [
+            Text(
+              'Just',
+              style: GoogleFonts.poppins(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Text('News',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    backgroundColor: Colors.black26,
+                    letterSpacing: 5))
+          ],
+        ),
+        actions: [
+          PopupMenuButton(
+            color: Colors.black54,
+            iconColor: Colors.black26,
+            initialValue: selectedMenu,
+            onSelected: (FilterList item) {
+              if (item == FilterList.thetimesofindia) {
+                name = 'the-times-of-india';
+              } else if (item == FilterList.thehindu) {
+                name = 'the-hindu';
+              }
+              setState(() {
+                selectedMenu = item;
+                _newsModelFuture = newsViewModel.fetchNewsChannelHeadLinesApi(
+                    name); // Fetch news with selected source
+              });
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<FilterList>>[
+              const PopupMenuItem<FilterList>(
+                value: FilterList.thehindu,
+                child: Text(
+                  'The Hindu',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              const PopupMenuItem<FilterList>(
+                value: FilterList.thetimesofindia,
+                child: Text(
+                  'The Times of India',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

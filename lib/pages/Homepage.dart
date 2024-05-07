@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:projecknew/newsApp/screens/splashScreen.dart';
-import 'package:projecknew/pages/chat_page.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:projecknew/pages/service/auth/auth_service.dart';
 import 'package:provider/provider.dart';
+import '../extra features/chatscreenhealper.dart';
+import '../newsApp/screens/categoryscreen.dart';
+import '../newsApp/screens/homescreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final controller = Get.put(NavigationController());
 
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
@@ -38,72 +41,28 @@ class _HomePageState extends State<HomePage> {
               ))
         ],
       ),
-      body: _buildUserList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SplashScreen()),
-          );
-        },
-        backgroundColor: Colors.grey.shade100,
-        child: const Icon(
-          Icons.newspaper,
-          color: Colors.black87,
+      bottomNavigationBar: Obx(
+        ()=> NavigationBar(
+          backgroundColor: Colors.grey.shade100,
+          height: 60,
+          elevation: 0,
+          selectedIndex: controller.selectedIndex.value,
+          onDestinationSelected: (index)=>controller.selectedIndex.value = index,
+          destinations: [
+            const NavigationDestination(icon: Icon(Iconsax.message), label: 'Chat'),
+              NavigationDestination(icon: InkWell(onTap:(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryScreen()));
+              },child: Icon(Iconsax.book)), label: 'News'),
+          ],
         ),
       ),
+      body: Obx(()=>controller.screens[controller.selectedIndex.value])
     );
   }
 
-  Widget _buildUserList() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('users').snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Text('Error');
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        }
-        final users = snapshot.data!.docs;
-        return ListView.builder(
-          itemCount: users.length,
-          itemBuilder: (context, index) {
-            final userData = users[index].data() as Map<String, dynamic>;
-            final userEmail = userData['email'] as String;
-            final userId = userData['uid'] as String;
-            final userName = userData['username'] as String;
-            if (_auth.currentUser!.email != userEmail) {
-              return Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.grey.shade100,
-                  ),
-                  child: ListTile(
-                    title: Text(userName),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChatPage(
-                            receiverUserEmail: userEmail,
-                            receverUserId: userId,
-                            User: userName,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        );
-      },
-    );
+
   }
+class NavigationController extends GetxController{
+  final Rx<int> selectedIndex = 0.obs;
+  final screens = [Container(child:  const ChatScreenHealper()),Container()];
 }
