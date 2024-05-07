@@ -126,7 +126,6 @@ class _ChatPageState extends State<ChatPage> {
               size: 40,
             ),
           ),
-          IconButton(onPressed: (){}, icon: Icon(Icons.image))
         ],
       ),
     );
