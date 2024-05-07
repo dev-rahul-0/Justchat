@@ -50,8 +50,8 @@ class _HomePageState extends State<HomePage> {
           destinations: [
             const NavigationDestination(icon: Icon(Iconsax.message), label: 'Chat'),
               NavigationDestination(icon: InkWell(onTap:(){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryScreen()));
-              },child: Icon(Iconsax.book)), label: 'News'),
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const CategoryScreen()));
+              },child: const Icon(Iconsax.book)), label: 'News'),
           ],
         ),
       ),
