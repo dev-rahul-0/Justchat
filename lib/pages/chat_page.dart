@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,10 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+
+
+
 
   final ScrollController _scrollController = ScrollController();
 
@@ -121,6 +126,7 @@ class _ChatPageState extends State<ChatPage> {
               size: 40,
             ),
           ),
+          IconButton(onPressed: (){}, icon: Icon(Icons.image))
         ],
       ),
     );
