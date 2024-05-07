@@ -25,9 +25,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text(
+          'JustChat',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: [
-          IconButton(onPressed: signOut, icon: const Icon(Icons.logout))
+          IconButton(
+              onPressed: signOut,
+              icon: const Icon(
+                Icons.logout_outlined,
+                color: Colors.black87,
+              ))
         ],
       ),
       body: _buildUserList(),
@@ -38,8 +46,11 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => const SplashScreen()),
           );
         },
-        backgroundColor: Colors.grey,
-        child: const Icon(Icons.newspaper),
+        backgroundColor: Colors.grey.shade100,
+        child: const Icon(
+          Icons.newspaper,
+          color: Colors.black87,
+        ),
       ),
     );
   }
@@ -63,19 +74,29 @@ class _HomePageState extends State<HomePage> {
             final userId = userData['uid'] as String;
             final userName = userData['username'] as String;
             if (_auth.currentUser!.email != userEmail) {
-              return ListTile(
-                title: Text(userName),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(
-                        receiverUserEmail: userEmail,
-                        receverUserId: userId, User: userName,
-                      ),
-                    ),
-                  );
-                },
+              return Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.grey.shade100,
+                  ),
+                  child: ListTile(
+                    title: Text(userName),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatPage(
+                            receiverUserEmail: userEmail,
+                            receverUserId: userId,
+                            User: userName,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               );
             } else {
               return const SizedBox();
