@@ -57,16 +57,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
           children: [
             Text(
-              'News',
+              'Just',
               style: GoogleFonts.poppins(
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const Text(' Time',
+            const Text('News',
                 style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 18,
+                    color: Colors.red,
+                    fontSize: 22,
                     fontWeight: FontWeight.w500,
                     backgroundColor: Colors.black26,
                     letterSpacing: 5))
@@ -115,8 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           FutureBuilder<NewsHeadlinesModel>(
             future: _newsModelFuture,
-            builder:
-                (BuildContext context, AsyncSnapshot<NewsHeadlinesModel> snapshot) {
+            builder: (BuildContext context,
+                AsyncSnapshot<NewsHeadlinesModel> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: SpinKitCircle(
@@ -130,116 +130,134 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               } else {
                 final articles = snapshot.data!.articles!;
-                return
-                  SizedBox(
-                    //yaah pr hight 0 krke ak slide bnd ki gai hai
-                    height: 0,
-                    width: 500,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: articles.length,
-                      itemBuilder: (context, index) {
-                        final article = articles[index];
-                        final dateTime =
-                            DateTime.parse(article.publishedAt.toString());
-                        return Container(
-                          width: width * 0.7,
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: InkWell(
+                return SizedBox(
+                  //yaah pr hight 0 krke ak slide bnd ki gai hai
+                  height: 0,
+                  width: 500,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: articles.length,
+                    itemBuilder: (context, index) {
+                      final article = articles[index];
+                      final dateTime =
+                          DateTime.parse(article.publishedAt.toString());
+                      return Container(
+                        width: width * 0.7,
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        child: InkWell(
                           onTap: () {
-                          Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                          builder: (context) => NewDetailsScreen(
-                          newImage: snapshot.data!.articles![index].urlToImage.toString(),
-                          newsTitle:  snapshot.data!.articles![index].title.toString(),
-                          author:  snapshot.data!.articles![index].author.toString(),
-                          newsdate:  snapshot.data!.articles![index].publishedAt.toString(),
-                          descripton:  snapshot.data!.articles![index].description.toString(),
-                          content:  snapshot.data!.articles![index].content.toString(),
-                          source:  snapshot.data!.articles![index].source!.name.toString(),
-                          )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NewDetailsScreen(
+                                          newImage: snapshot
+                                              .data!.articles![index].urlToImage
+                                              .toString(),
+                                          newsTitle: snapshot
+                                              .data!.articles![index].title
+                                              .toString(),
+                                          author: snapshot
+                                              .data!.articles![index].author
+                                              .toString(),
+                                          newsdate: snapshot.data!
+                                              .articles![index].publishedAt
+                                              .toString(),
+                                          descripton: snapshot.data!
+                                              .articles![index].description
+                                              .toString(),
+                                          content: snapshot
+                                              .data!.articles![index].content
+                                              .toString(),
+                                          source: snapshot.data!
+                                              .articles![index].source!.name
+                                              .toString(),
+                                        )));
                           },
-                            child: Card(
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: Image.network(
-                                        article.urlToImage ?? '', // Load image URL
-                                        fit: BoxFit.cover,
-                                        loadingBuilder:
-                                            (context, child, loadingProgress) {
-                                          if (loadingProgress == null) return child;
-                                          return const Center(
-                                            child: SpinKitFadingCircle(
-                                              color: Colors.white,
-                                              size: 30,
-                                            ),
-                                          );
-                                        },
-                                        errorBuilder: (context, error, stackTrace) =>
-                                            Image.asset('images/not.png'),
-                                      ),
+                          child: Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      article.urlToImage ??
+                                          '', // Load image URL
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return const Center(
+                                          child: SpinKitFadingCircle(
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
+                                        );
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Image.asset('images/not.png'),
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 0,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            article.title ?? '', // Display headline
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
+                                ),
+                                Expanded(
+                                  flex: 0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          article.title ??
+                                              '', // Display headline
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              article.source?.name ?? '',
+                                              // Display source
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                article.source?.name ?? '',
-                                                // Display source
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                            Text(
+                                              format.format(dateTime),
+                                              // Display date
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              Text(
-                                                format.format(dateTime),
-                                                // Display date
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
+                  ),
                 );
               }
             },
@@ -272,39 +290,67 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => NewDetailsScreen(
-                                                newImage: snapshot.data!.articles![index].urlToImage.toString(),
-                                                newsTitle:  snapshot.data!.articles![index].title.toString(),
-                                                author:  snapshot.data!.articles![index].author.toString(),
-                                                newsdate:  snapshot.data!.articles![index].publishedAt.toString(),
-                                                descripton:  snapshot.data!.articles![index].description.toString(),
-                                                content:  snapshot.data!.articles![index].content.toString(),
-                                                source:  snapshot.data!.articles![index].source!.name.toString(),
-                                              )));
+                                              builder: (context) =>
+                                                  NewDetailsScreen(
+                                                    newImage: snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .urlToImage
+                                                        .toString(),
+                                                    newsTitle: snapshot.data!
+                                                        .articles![index].title
+                                                        .toString(),
+                                                    author: snapshot.data!
+                                                        .articles![index].author
+                                                        .toString(),
+                                                    newsdate: snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .publishedAt
+                                                        .toString(),
+                                                    descripton: snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .description
+                                                        .toString(),
+                                                    content: snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .content
+                                                        .toString(),
+                                                    source: snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .source!
+                                                        .name
+                                                        .toString(),
+                                                  )));
                                     },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
                                       child: CachedNetworkImage(
-                                        imageUrl: snapshot.data!.articles![index]
-                                            .urlToImage ??
+                                        imageUrl: snapshot.data!
+                                                .articles![index].urlToImage ??
                                             '',
                                         fit: BoxFit.cover,
                                         height: height * 0.3,
                                         width: width * 0.9,
-                                        placeholder: (context, url) => Container(
-                                            child: const Center(
-                                              child: SpinKitCircle(
-                                                size: 50,
-                                                color: Colors.black45,
-                                              ),
-                                            )),
+                                        placeholder: (context, url) =>
+                                            Container(
+                                                child: const Center(
+                                          child: SpinKitCircle(
+                                            size: 50,
+                                            color: Colors.black45,
+                                          ),
+                                        )),
                                         errorWidget: (context, url, error) =>
                                             Image.asset('images/not.png'),
                                       ),
@@ -314,28 +360,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 10,
                                   ),
                                   Text(
-                                    snapshot
-                                        .data!.articles![index].title.toString(),
+                                    snapshot.data!.articles![index].title
+                                        .toString(),
                                     maxLines: 2,
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  const SizedBox(height: 15,),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        snapshot
-                                            .data!.articles![index].source?.name ?? '',
+                                        snapshot.data!.articles![index].source
+                                                ?.name ??
+                                            '',
                                         // Display source
                                         style: GoogleFonts.poppins(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      const SizedBox(height: 8,),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
                                       Text(
                                         format.format(dateTime), // Display date
                                         style: GoogleFonts.poppins(
@@ -353,7 +405,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 }),
           ),
-
         ],
       ),
     );
