@@ -7,7 +7,6 @@ import 'package:projecknew/pages/service/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 import '../extra features/chatscreenhealper.dart';
 import '../newsApp/screens/categoryscreen.dart';
-import '../newsApp/screens/homescreen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
