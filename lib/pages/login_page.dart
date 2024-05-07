@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class Layout extends StatefulWidget {
   final void Function()? onTap;
-  const Layout({super.key,required this.onTap});
+  const Layout({super.key, this.onTap});
 
   @override
   State<Layout> createState() => _LayoutState();
@@ -15,21 +15,25 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
-  void Signin() async{
-  final authService = Provider.of<AuthService>(context, listen: false);
+  void Signin() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
 
-  try {
-    await authService.signInWithEmailandPassword(
+    try {
+      await authService.signInWithEmailandPassword(
         _emailcontroller.text,
-        _passwordcontroller.text,);
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(
-        e.toString(),
-      ),),
-    );
+        _passwordcontroller.text,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
   }
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,45 +46,60 @@ class _LayoutState extends State<Layout> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50,),
-                  Icon(
-                    Icons.account_circle_outlined,
-                    size: 80,
-                    color: Colors.grey[800],
+                  const SizedBox(
+                    height: 50,
                   ),
-                  const SizedBox(height: 50,),
+                  SizedBox(
+                    width: 250,
+                    child: const Image(
+                        fit: BoxFit.cover,
+                        image: AssetImage("images/logo-removebg-preview.png")),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   const Text(
                     "Welcome back you\'ve been missed",
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 25,),
+                  const SizedBox(
+                    height: 25,
+                  ),
                   MyTextField(
                       controller: _emailcontroller,
                       hintText: 'E-mail',
                       obscureText: false),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   MyTextField(
                       controller: _passwordcontroller,
                       hintText: 'Password',
                       obscureText: true),
-                  const SizedBox(height: 25,),
-                  MyButton(
-                      onTap: Signin,
-                      text: 'Sign In'),
-                  const SizedBox(height: 50,),
-                    Row(
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  MyButton(onTap: Signin, text: 'Sign In'),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Not a member?'),
-                      const SizedBox(width: 4,),
+                      const SizedBox(
+                        width: 4,
+                      ),
                       GestureDetector(
                         onTap: widget.onTap,
-                        child: const Text('Register now',style:
-                          TextStyle(
+                        child: const Text(
+                          'Register now',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                          ),),
+                          ),
+                        ),
                       ),
                     ],
                   )

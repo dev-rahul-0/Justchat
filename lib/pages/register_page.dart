@@ -32,12 +32,14 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       final userCredential = await authService.signUpWithEmailandPassword(
           emailController.text, passwordController.text);
-      await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
         'email': emailController.text,
         'uid': userCredential.user!.uid,
         'username': usernameController.text,
       });
-
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
@@ -58,10 +60,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 50),
-                  Icon(
-                    Icons.account_circle_outlined,
-                    size: 80,
-                    color: Colors.grey[800],
+                  SizedBox(
+                    width: 250,
+                    child: const Image(
+                        fit: BoxFit.cover,
+                        image: AssetImage("images/logo-removebg-preview.png")),
                   ),
                   const SizedBox(height: 50),
                   const Text(
@@ -71,7 +74,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  MyTextField( // Step 2
+                  MyTextField(
+                    // Step 2
                     controller: usernameController,
                     hintText: 'Username',
                     obscureText: false,
