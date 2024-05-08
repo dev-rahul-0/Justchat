@@ -1,6 +1,7 @@
 import "package:flutter/cupertino.dart";
 import "package:get/get.dart";
 import "package:projecknew/pages/login_page.dart";
+import "package:projecknew/pages/onboarding/getstarted.dart";
 import "package:projecknew/pages/service/auth/login_or_register.dart";
 import "package:projecknew/pages/service/auth_gate.dart";
 
@@ -24,8 +25,8 @@ class OnBoardingController extends GetxController {
 
   //update current index & jump to next page
   void nextPage() {
-    if (currentPageIndex.value == 2) {
-      Get.to(const AuthGate());
+    if (currentPageIndex.value == 1) {
+      Get.to(const GetStarted());
     } else {
       int page = currentPageIndex.value + 1;
       pageController.jumpToPage(page);
@@ -34,7 +35,7 @@ class OnBoardingController extends GetxController {
 
   //update current index & jump to the last page
   void skipPage() {
-    currentPageIndex.value = 2;
-    pageController.jumpToPage(2);
+    currentPageIndex.value = 1;
+    pageController.jumpToPage(1);
   }
 }

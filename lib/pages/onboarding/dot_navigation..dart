@@ -24,7 +24,7 @@ class onBoardingDotNavigation extends StatelessWidget {
               dotHeight: 6),
           controller: controller.pageController,
           onDotClicked: controller.dotNavigationClick,
-          count: 3),
+          count: 2),
     );
   }
 }
