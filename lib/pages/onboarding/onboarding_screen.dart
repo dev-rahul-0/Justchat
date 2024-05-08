@@ -41,7 +41,7 @@ class OnBoardingScreen extends StatelessWidget {
               //   title: "",
               //   subTitle: "",
               // ),
-              GetStarted()
+              
             ],
           ),
           //Skip Button
