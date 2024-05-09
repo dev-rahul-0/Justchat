@@ -6,7 +6,7 @@ Connect, share, and explore with ease Chat APK for Flutter, where conversations 
 
 |     Registered UI      |Login UI                   |  Home Screen                | News screen |
 | ---------------------- | ------------------------- | ----------------------------|-------------|
-|<img src="https://github.com/isthissuraj/Justchat/assets/112235622/e1e112bd-c314-4637-9b98-a51950112964" alt="Message Toast Image" width="275" /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/36c9cc3f-fdc5-4094-bedd-b581ef3d68de" alt="Widget Toast Image" width="290"  /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/893c15c6-a425-46be-8114-0ef7a6e86085" alt="Hello image" width="290"  /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/0b101246-93f1-4313-94ca-c600dcda4982" alt="Widget Toast Image" width="290"  /> |
+|<img src="https://github.com/isthissuraj/Justchat/assets/112235622/e1e112bd-c314-4637-9b98-a51950112964" alt="Message Toast Image" width="360" /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/36c9cc3f-fdc5-4094-bedd-b581ef3d68de" alt="Widget Toast Image" width="400"  /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/893c15c6-a425-46be-8114-0ef7a6e86085" alt="Hello image" width="400"  /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/0b101246-93f1-4313-94ca-c600dcda4982" alt="Widget Toast Image" width="400"  /> |
 
 ## Installation
 
