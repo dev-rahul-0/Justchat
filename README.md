@@ -4,11 +4,15 @@ Connect, share, and explore with ease Chat APK for Flutter, where conversations 
 
 ## Screenshots
 
-|     Registered UI      |Login UI                   |  Home Screen                | Chat Screen |
+|     Registered UI      |Login UI                   |  Home Screen                | News screen |
 | ---------------------- | ------------------------- | ----------------------------|-------------|
-| <img src="https://github.com/dev-rahul-0/Justchat/assets/114253454/5244f76f-0897-4f62-b014-e4d2dcdb9bd2" alt="Message Toast Image" style="zoom:33%;" /> | <img src="https://github.com/dev-rahul-0/Justchat/assets/114253454/b54691f6-286d-4325-986e-4d2d9200eea8" alt="Widget Toast Image" style="zoom:33%;" /> | <img src="https://github.com/dev-rahul-0/Justchat/assets/114253454/81f2ed92-f684-43b9-a420-cee0c107821a" alt="Hello image" style="zoom:33%;" /> |<img src="https://github.com/dev-rahul-0/Justchat/assets/114253454/fb6d3e77-183e-43d5-bd55-713d12c0b033" alt="Widget Toast Image" style="zoom:33%;" /> |
+| <img src="https://github.com/isthissuraj/Justchat/assets/112235622/e1e112bd-c314-4637-9b98-a51950112964" alt="Message Toast Image" style="zoom:33%;" /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/36c9cc3f-fdc5-4094-bedd-b581ef3d68de" alt="Widget Toast Image" style="zoom:33%;" /> | <img src="https://github.com/isthissuraj/Justchat/assets/112235622/893c15c6-a425-46be-8114-0ef7a6e86085" alt="Hello image" style="zoom:33%;" /> |<img src="https://github.com/isthissuraj/Justchat/assets/112235622/0b101246-93f1-4313-94ca-c600dcda4982" alt="Widget Toast Image" style="zoom:33%;" /> |
 
 ## Installation
+
+
+
+
 
 1. Clone this repo
 ```sh
